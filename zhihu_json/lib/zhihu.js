@@ -258,11 +258,11 @@ function loadImgs(user, cb) {
       let writeStream = fs.createWriteStream(path.join(IMGDIR, fileName));
       let req = request.get(img);
       logger.debug('>>>>  start load: ' + fileName);
-      writeStream.on('error', () => {
+      req.on('error', () => {
         logger.debug('----  fail load: ' + fileName);
         callback();
       });
-      writeStream.on('finish', () => {
+      req.on('end', () => {
         logger.debug('----  finish load: ' + fileName);
         callback();
       });

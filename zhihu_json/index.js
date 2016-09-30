@@ -16,16 +16,17 @@ spider.startFetch(function (err) {
       if (err) {
         logger.error('load images fail:', err);
       } else {
-        logger.debug('\r\n======  finish load all images  ======');
+        logger.debug('\r\n======  end spider  ======');
       }
     });
   }
 });
 
-//spider.startLoad(function (err) {
-//  if (err) {
-//    logger.error('load images fail:', err);
-//  } else {
-//    logger.debug('\r\n======  finish load all images  ======');
-//  }
-//});
+/*
+spider.startLoad(function (err) {
+  if (err) {
+    logger.error('load images fail:', err);
+  } else {
+    logger.debug('\r\n======  finish load all images  ======');
+  }
+});*/

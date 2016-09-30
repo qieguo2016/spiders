@@ -1,13 +1,13 @@
-1���ȴ� https://nodejs.org/en/��ѡ���ұߵ����°�nodejs�����ذ�װ����װ����һ·next���ɡ�
+1、先打开 https://nodejs.org/en/，选择右边的最新版nodejs，下载安装，安装过程一路next即可。
 
-2���õ��Թȸ��������¼֪������f12�����Ҽ�����������̨���ҵ�Applicationһ�����㿪Cookies���ҵ�z_c0�ֶΣ�����������Value��
-   �Ҽ�ʹ�ü��±�����Ŀ�����config.js�ļ����滻����cookies��z_c0�����ֵ��Ĭ�ϵ�ֵ�Ǽٵģ�����Ϊ��¥���Ĺ����������ļ���
-   ע�����յı�����Ӧ����'z_c0=abcdefg'������ӵģ������Ų�Ҫ����˹���
+2、用电脑谷歌浏览器登录知乎，按f12或者右键检查调出控制台，找到Application一栏，点开Cookies，找到z_c0字段，并复制它的Value。
+   重命名项目里面的config.default.js文件为config.js，右键使用记事本打开，替换里面cookies的z_c0后面的值（默认的值是假的），保存文件。
+   注意最终的表达是应该是'z_c0=abcdefg'这个样子的，单引号不要搞错了哈。
 
-3��˫��install.bat�ļ����ȴ���װ������
+3、双击install.bat文件，等待安装结束。
 
-4��˫��run.bat�ļ��������ű���ע��һ��Ҫ�Ȳ���3��ȫ�����ſ���ִ�в���4�����й����в�Ҫ�ر������д��ڣ���Ҫ�������д��ڲ������̡�
+4、双击run.bat文件，启动脚本。注意一定要等步骤3完全结束才可以执行步骤4，运行过程中不要关闭命令行窗口，不要在命令行窗口操作键盘。
 
-���й������кܶ����������С�ѹ������ģ����ͷ�ѽôô�գ�
+运行过程中有很多输出，这是小茄故意留的，极客风呀么么哒！
 
-PS��ͼƬ��imgs�ļ����������
+PS：图片在imgs文件夹里面哈。
