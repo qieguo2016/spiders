@@ -1,0 +1,25 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Folder
+.idea
+logs
+node_modules
+imgs
+config.js
+
+# Log file
+*.log
