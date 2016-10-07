@@ -17,7 +17,7 @@ const config = require('../config');
 const logger = require('../common/logger');
 const User = require('../models/').User;
 
-let baseUrl = 'https://www.zhihu.com/question/37709992';
+let baseUrl = 'https://www.zhihu.com/question/' + config.questionToken;
 let pageUrl = 'https://www.zhihu.com/node/QuestionAnswerListV2';
 let cookies = config.cookies[2];
 let userAgent = config.userAgent[2];
@@ -185,7 +185,7 @@ function startFetch(cb) {
     for (let i = 1; i < num; i++) {
       opts.push({
         url   : pageUrl,
-        token : 37709992,
+        token : config.questionToken,
         size  : 10,
         offset: 10 * i,
       });
@@ -194,16 +194,19 @@ function startFetch(cb) {
 
     // 开始爬取其他页面，控制最大并发数为5，这里出错不调用cb
     async.eachLimit(opts, 5, function (opt, callback) {
-      // 加点随机性，模仿人类操作
-      let delay = parseInt((Math.random() * 30000000) % 2000);
-      setTimeout(function () {
-        logger.debug('------  start fetch page  ------');
-        fetchPage(opt, function (err) {
-          // 无论是否有err，都要保证函数执行下去！所以不能callbace(err)
-          // err应该用其他方法收集起来，这里暂不做
-          callback();
-        });
-      }, delay);
+      // 无论是否有err，都要保证函数执行下去！所以不能callbace(err)
+      // err应该用其他方法收集起来，这里暂不做
+      fetchPage(opt, (err)=> {callback()});
+      // 加点随机性，模仿人类操作，>> 没必要
+      //let delay = parseInt((Math.random() * 30000000) % 2000);
+      //setTimeout(function () {
+      //  logger.debug('------  start fetch page  ------');
+      //  fetchPage(opt, function (err) {
+      //    // 无论是否有err，都要保证函数执行下去！所以不能callbace(err)
+      //    // err应该用其他方法收集起来，这里暂不做
+      //    callback();
+      //  });
+      //}, delay);
     }, function (err) {
       if (err) {
         logger.error(err);
@@ -224,18 +227,18 @@ function startFetch(cb) {
  * - err: 出错信息
  */
 function loadImgs(user, cb) {
-  let pre = user.name || Date.now().toString().substr(5, 8);
+  let pre = user.name || '匿名用户' + Date.now().toString().substr(5, 8);
   async.eachOfLimit(user.imgs, 10, function (img, index, callback) {
     if (!img) {
       callback();
     } else {
       let fileName = pre + '_' + index + path.extname(img);
-      let write = fs.createWriteStream('../imgs/' + fileName);
+      let write = fs.createWriteStream(config.imgsDir + fileName);
       let req = request.get(img);
       let stream = req.pipe(write);
       logger.debug('>>>>  start load: ' + fileName);
       stream.on('error', () => {
-        logger.debug('----  fail load: ' + fileName);
+        logger.debug('!!!!  fail load: ' + fileName);
         callback();
       });
       stream.on('finish', () => {
@@ -301,13 +304,13 @@ function startLoad(cb) {
 //  }
 //});
 
-startLoad(function (err) {
-  if (err) {
-    logger.error('load images fail:', err);
-  } else {
-    logger.debug('======  finish load all images  ======');
-  }
-});
+//startLoad(function (err) {
+//  if (err) {
+//    logger.error('load images fail:', err);
+//  } else {
+//    logger.debug('======  finish load all images  ======');
+//  }
+//});
 
 exports.startFetch = startFetch;
 exports.startLoad = startLoad;

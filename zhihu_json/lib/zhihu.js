@@ -23,7 +23,7 @@ const logger = require('./logger');
 
 const DATADIR = path.join(__dirname, '../data');
 const IMGDIR = path.join(__dirname, '../imgs');
-const baseUrl = 'https://www.zhihu.com/question/37709992';
+const baseUrl = 'https://www.zhihu.com/question/' + config.questionToken;
 const pageUrl = 'https://www.zhihu.com/node/QuestionAnswerListV2';
 let cookies = config.cookies[0];
 let userAgent = config.userAgent[0];
@@ -212,7 +212,7 @@ function startFetch(cb) {
     for (let i = 1; i < num; i++) {
       opts.push({
         url   : pageUrl,
-        token : 37709992,
+        token : config.questionToken,
         size  : 10,
         offset: 10 * i,
       });

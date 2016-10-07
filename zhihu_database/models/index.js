@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var config = require('../config');
 var logger = require('../common/logger');
 
+// 使用Node的promise代替mongoose的内置promise
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db, {
   server: {poolSize: 20}

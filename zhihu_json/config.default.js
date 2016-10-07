@@ -3,6 +3,9 @@ module.exports = {
   // 调试开关
   debug: true,
 
+  //问题的编号，url的最后一串数字。https://www.zhihu.com/question/37709992
+  questionToken: 37709992,
+
   userAgent: [
     'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36',
     'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
