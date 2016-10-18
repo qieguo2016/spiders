@@ -1,7 +1,7 @@
 A Store of Spiders
 ------
 
-- 知乎爬虫：[知乎](https://www.zhihu.com)
+- 知乎爬虫
 
     有两个版本，数据库版本和JSON文件版本。具体说明参见项目内部说明文档。
 
