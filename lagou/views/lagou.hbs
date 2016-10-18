@@ -1,0 +1,265 @@
+{{#section 'head'}}
+  <link rel="stylesheet" type="text/css" href="/css/lagou.css"/>
+{{/section}}
+<div class="info-wrp">
+  <h3>拉勾网小爬虫</h3>
+    <span class="input-wrp">
+        城市：<input type="text" id="city" class="input" value="" placeholder="北京"/>
+    </span>
+    <span class="input-wrp">
+        职位：<input type="text" id="kd" class="input" value="" placeholder="前端开发"/>
+    </span>
+  <input type="button" id="search" class="btn" value="启动爬虫"/>
+</div>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="echart1" style="height:250px"></div>
+<div id="echart2" style="height:250px"></div>
+
+<div class="loader-wrp" style="display: none">
+  <div class="loader"></div>
+  数据较多，请耐心等待...
+</div>
+
+
+{{#section 'foot'}}
+  <!-- ECharts单文件引入 -->
+  <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+  <script type="text/javascript">
+    var app = (function () {
+      var workYears = [], companySizes = [], myChart1 = null, myChart2 = null;
+
+      function initPage() {
+        // 路径配置
+        require.config({
+          paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+          }
+        });
+
+        // 使用
+        require([
+          'echarts',
+          'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+        ], function (ec) {
+          // 基于准备好的dom，初始化echarts图表
+          myChart1 = ec.init(document.getElementById('echart1'));
+          myChart2 = ec.init(document.getElementById('echart2'));
+        });
+      }
+
+      function bindEvent() {
+        var search = document.getElementById("search");
+        search.addEventListener('click', function (e) {
+
+          var city = document.getElementById("city").value || "北京",
+              kd = document.getElementById("kd").value || "前端开发",
+              url = "http://" + location.host + "/lagou";
+
+          var loader = document.getElementsByClassName('loader-wrp')[0];
+
+          url += "?city=" + encodeURIComponent(city) + "&kd=" + encodeURIComponent(kd);
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              loader.style = 'display: none;';
+              if (xhr.status === 200) {
+                // 成功，通过responseText拿到响应的文本:
+                var datas = JSON.parse(xhr.responseText);
+                count(datas);
+                draw();
+              } else {
+                // 失败，根据响应码判断失败原因:
+                alert('error: ' + xhr.status);
+              }
+            }
+          };
+          xhr.open("POST", url);
+          xhr.send();
+          loader.style = 'display: block;';
+        });
+      }
+
+      function count(datas) {
+
+        workYears = [0, 0, 0, 0, 0];
+        companySizes = [0, 0, 0, 0, 0, 0];
+
+        for (var i = 0, len = datas.length; i < len; i++) {
+          switch (datas[i].workYear) {
+            case "1-3年":
+              workYears[1]++;
+              break;
+            case "3-5年":
+              workYears[2]++;
+              break;
+            case "5-10年":
+              workYears[3]++;
+              break;
+            case "10年以上":
+              workYears[4]++;
+              break;
+            default:
+              workYears[0]++;
+          }
+          switch (datas[i].companySize) {
+            case "少于15人":
+              companySizes[0]++;
+              break;
+            case "15-50人":
+              companySizes[1]++;
+              break;
+            case "50-150人":
+              companySizes[2]++;
+              break;
+            case "150-500人":
+              companySizes[3]++;
+              break;
+            case "500-2000人":
+              companySizes[4]++;
+              break;
+            case "2000人以上":
+              companySizes[5]++;
+              break;
+            default:
+              console.error('company size count error');
+          }
+        }
+
+      }
+
+      function draw() {
+        var option1 = {
+          title     : {
+            text: '公司规模'
+          },
+          tooltip   : {
+            trigger: 'axis'
+          },
+          toolbox   : {
+            show   : true,
+            feature: {
+              mark       : {
+                show: true
+              },
+              dataView   : {
+                show    : true,
+                readOnly: false
+              },
+              magicType  : {
+                show: true,
+                type: ['line', 'bar']
+              },
+              restore    : {
+                show: true
+              },
+              saveAsImage: {
+                show: true
+              }
+            }
+          },
+          calculable: true,
+          xAxis     : [{
+            type: 'category',
+            data: ['少于15人', '15-50人', '50-150人', '150-500人', '500-2000人', '2000人以上']
+          }],
+          yAxis     : [{
+            type: 'value'
+          }],
+          series    : [{
+            name     : '公司数量',
+            type     : 'bar',
+            data     : companySizes,
+            markPoint: {
+              data: [{
+                type: 'max',
+                name: '最大值'
+              }, {
+                type: 'min',
+                name: '最小值'
+              }]
+            },
+            markLine : {
+              data: [{
+                type: 'average',
+                name: '平均值'
+              }]
+            }
+          }]
+        };
+        var option2 = {
+          title     : {
+            text: '工作经验要求'
+          },
+          tooltip   : {
+            trigger: 'axis'
+          },
+          toolbox   : {
+            show   : true,
+            feature: {
+              mark       : {
+                show: true
+              },
+              dataView   : {
+                show    : true,
+                readOnly: false
+              },
+              magicType  : {
+                show: true,
+                type: ['line', 'bar']
+              },
+              restore    : {
+                show: true
+              },
+              saveAsImage: {
+                show: true
+              }
+            }
+          },
+          calculable: true,
+          xAxis     : [{
+            type: 'category',
+            data: ['不限', '1-3年', '3-5年', '5-10年', '10年以上']
+          }],
+          yAxis     : [{
+            type: 'value'
+          }],
+          series    : [{
+            name     : '公司数量',
+            type     : 'bar',
+            data     : workYears,
+            markPoint: {
+              data: [{
+                type: 'max',
+                name: '最大值'
+              }, {
+                type: 'min',
+                name: '最小值'
+              }]
+            },
+            markLine : {
+              data: [{
+                type: 'average',
+                name: '平均值'
+              }]
+            }
+          }]
+        };
+        // 为echarts对象加载数据
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
+      }
+
+      return {
+        init: function () {
+          initPage();
+          bindEvent();
+        }
+      };
+
+    })();
+
+    app.init();
+
+  </script>
+{{/section}}

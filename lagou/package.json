@@ -1,0 +1,26 @@
+{
+  "name": "lagou",
+  "version": "0.0.0",
+  "description": "lagou spider",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "supervisor ./bin/www"
+  },
+  "author": {
+    "name": "qieguo",
+    "blog": "http://www.cnblogs.com/qieguo/"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.6",
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "hbs": "^4.0.0",
+    "log4js": "^0.6.38",
+    "morgan": "~1.7.0",
+    "request": "^2.55.0",
+    "serve-favicon": "~2.3.0"
+  }
+}
