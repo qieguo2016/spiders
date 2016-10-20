@@ -4,7 +4,7 @@ A Store of Spiders
 - 知乎爬虫
 
     有两个版本，数据库版本和JSON文件版本。具体说明参见项目内部说明文档。
-    ![知乎爬虫效果](https://github.com/qieguo2016/spiders/blob/master/resource/zhihu.png)
+    ![知乎爬虫效果](https://github.com/qieguo2016/spiders/blob/master/resource/zhihu.jpg)
 
 - 拉勾爬虫
 
