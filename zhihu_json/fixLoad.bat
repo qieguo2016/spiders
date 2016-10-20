@@ -1,0 +1,3 @@
+@echo 已有json文件，现在开始爬取...
+
+node json2img.js
