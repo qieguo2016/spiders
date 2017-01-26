@@ -90,11 +90,12 @@ function initRequestOpt(urls, opts, num) {
         url    : url,
         qs     : {start: (i * 25).toString()},
         headers: {
-          'accept'       : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-          'cache-control': 'no-cache',
-          'http-only'    : true,
-          'user-agent'   : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
+          'Accept'       : '*/*',
+          'Accept-Language': 'zh-CN,zh;q=0.8',
+          'Cookie': 'bid=vkXjYPjxO6E; ll="108258";',
+          'User-Agent'   : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'
         }
+        // 伪造报文头部，模仿浏览器行为，否则403错误
       });
     }
   });
