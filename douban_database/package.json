@@ -1,0 +1,23 @@
+{
+  "name": "douban_database",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "zhihu": "node ./main"
+  },
+  "dependencies": {
+    "async": "^2.0.1",
+    "body-parser": "~1.15.1",
+    "cheerio": "^0.22.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "hbs": "~4.0.0",
+    "log4js": "^0.6.38",
+    "mongoose": "^4.6.1",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0",
+    "superagent": "^2.3.0",
+    "superagent-proxy": "^1.0.1"
+  }
+}
